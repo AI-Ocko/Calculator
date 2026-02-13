@@ -1,0 +1,67 @@
+.calculator {
+  display: flex;
+  flex-direction: column;
+
+  /* this centers the entire calculator */
+  margin-left: 500px;
+  margin-right: 500px;
+
+  border: solid, green;
+  border-width: 2px;
+}
+
+.display {
+  display: flex;
+
+  /* justifies the result to the left side */
+  justify-content: end;
+
+  border: solid, blue;
+  border-width: 2px;
+}
+
+
+.input {
+  border: solid, blue;
+  border-width: 2px;
+}
+
+.row1 {
+  display: flex;
+  justify-content: end;
+
+  border: solid, red;
+  border-width: 2px;
+}
+
+.row2 {
+  display: flex;
+  justify-content: end;
+
+  border: solid, red;
+  border-width: 2px;
+}
+
+.row3 {
+  display: flex;
+  justify-content: end;
+
+  border: solid, red;
+  border-width: 2px;
+}
+
+.row4 {
+  display: flex;
+  justify-content: end;
+
+  border: solid, red;
+  border-width: 2px;
+}
+
+.row5 {
+  display: flex;
+  justify-content: end;
+
+  border: solid, red;
+  border-width: 2px;
+}

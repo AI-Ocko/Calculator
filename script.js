@@ -1,3 +1,4 @@
+// basic arithmetic functions
 function add(a, b) {
   let c = a + b;
   return c;
@@ -18,18 +19,19 @@ function divide(a, b) {
   return c;
 }
 
+// operate function
 function operate(operator, a, b) {
-  switch(operator) {
+  switch (operator) {
     case ("+"):
       return add(a, b);
       break;
-    case("-"):
+    case ("-"):
       return subtract(a, b);
       break;
-    case("*"):
+    case ("*"):
       return multiply(a, b);
       break;
-    case("/"):
+    case ("/"):
       return divide(a, b);
       break;
     default:
@@ -38,14 +40,22 @@ function operate(operator, a, b) {
   }
 
 }
+
 let a, b, c;
 
-b = parseInt(b);
-c = parseInt(c);
+// default value for calculator display
+var result = 0;
+document.getElementById("output").innerHTML = result;
 
-a = prompt("Enter what operation you wish to perform");
-b = prompt("Enter the first number");
-c = prompt("Enter the second number");
-
-let y = operate(a, b, c); 
-console.log("%d\n", y);
+const buttons = document.querySelectorAll(
+  // maybe put the operators in a separate function for display, purposes, not sure
+  "#one, #two, #three, #four, #five, #six, #seven, #eight, #nine, #zero, #plus, #minus, #multiply, #divide, #equals"
+);
+buttons.forEach(button => {
+  button.addEventListener("click", function() {
+    // need to chnage this so display can properly output opreator signs
+    a = +this.textContent;
+    result = a;
+    document.getElementById("output").innerHTML = result;
+  });
+});
