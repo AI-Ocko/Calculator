@@ -1,3 +1,13 @@
+// TODO:
+// add functionality to clear button
+// figure out how to store secondNum without duplicating numbers in the display
+// append secondNum to the display
+// add functionality to equals sign, I'm thinking:
+//  on click
+//  operate()
+//  print to display
+//  stop all function
+// 
 // basic arithmetic functions
 function add(a, b) {
   let c = a + b;
@@ -40,22 +50,37 @@ function operate(operator, a, b) {
   }
 
 }
+// default display
+var display = 0;
+document.getElementById("output").innerHTML = display;
 
-let a, b, c;
+let firstNum, secondNum, arithmeticOperator, result;
 
-// default value for calculator display
-var result = 0;
-document.getElementById("output").innerHTML = result;
-
-const buttons = document.querySelectorAll(
-  // maybe put the operators in a separate function for display, purposes, not sure
-  "#one, #two, #three, #four, #five, #six, #seven, #eight, #nine, #zero, #plus, #minus, #multiply, #divide, #equals"
+// set firstNum
+const buttonNumberOne = document.querySelectorAll(
+  "#one, #two, #three, #four, #five, #six, #seven, #eight, #nine, #zero"
 );
-buttons.forEach(button => {
+buttonNumberOne.forEach(button => {
   button.addEventListener("click", function() {
-    // need to chnage this so display can properly output opreator signs
-    a = +this.textContent;
-    result = a;
-    document.getElementById("output").innerHTML = result;
+    firstNum = this.textContent; // set firstNum to clicked button
+    if (display == 0) { // check if display is 0, if so, changed to firstNum
+      display = firstNum;
+    } else { // if not, append numbers
+
+      display = display + firstNum;
+    }
+    document.getElementById("output").innerHTML = display;
   });
+});
+
+// set arithmeticOperator 
+const operatorButtons = document.querySelectorAll(
+  "#plus, #minus, #multiply, #divide"
+);
+operatorButtons.forEach(button => {
+  button.addEventListener("click", function() {
+    arithmeticOperator = this.textContent; // set arithmeticOperator to clicked button
+    display = display + arithmeticOperator;
+    document.getElementById("output").innerHTML = display;
+  })
 });
