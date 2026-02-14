@@ -1,15 +1,3 @@
-// TODO:
-//    What currently works:
-//        add, subtract, multiply, and divide functions,
-//        function for calculator operation with three variables called "operate",
-//        HTML calculator with buttons for each digit and operator,
-//            display for the calculator
-//            clear button
-//    What I need to work on:
-//        figure out how to update the display properly,
-//        make the calculator work,
-//            store the variables,
-//
 // basic arithmetic functions
 function add(a, b) {
   return a + b;
@@ -42,14 +30,19 @@ function operate(operator, a, b) {
 
 }
 
+// round number if larger than 10 digits
+function formatResult(value) {
+  if (value === null || !Number.isFinite(value)) return value; // double check for edge cases
+  return Number(value.toPrecision(10));
+}
+
 let arithmeticOperator = null;
 let firstNum = "";
 let secondNum = "";
 
 // update display
 function updateDisplay() {
-  // edge case for dividing by zero
-  if (arithmeticOperator === "/" && secondNum === "0") {
+  if (arithmeticOperator === "/" && secondNum === "0") { // edge case for dividing by zero
     document.getElementById("output").textContent = "Funny guy huh?";
   } else
     document.getElementById("output").textContent =
@@ -65,9 +58,10 @@ equalsButton.addEventListener("click", function() {
   if (firstNum === "" || secondNum === "" || arithmeticOperator === null) return;
 
   // calculate
-  const result = operate(arithmeticOperator, Number(firstNum), Number(secondNum));
+  const rawResult = operate(arithmeticOperator, Number(firstNum), Number(secondNum));
+  const result = formatResult(rawResult);
   // reset variables for next operation
-  firstNum = result;
+  firstNum = String(result);
   secondNum = "";
   arithmeticOperator = null;
 
@@ -103,8 +97,9 @@ arithmeticOperatorButton.forEach(button => {
     if (firstNum === "") return;
     // if there's already a second num, then evaluate the current expression
     if (secondNum) {
-      const result = operate(arithmeticOperator, Number(firstNum), Number(secondNum));
-      firstNum = result;
+      const rawResult = operate(arithmeticOperator, Number(firstNum), Number(secondNum));
+      const result = formatResult(rawResult);
+      firstNum = String(result);
       secondNum = "";
     }
 
