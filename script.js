@@ -1,60 +1,56 @@
 // TODO:
-// add functionality to clear button
-// figure out how to store secondNum without duplicating numbers in the display
-// append secondNum to the display
-// add functionality to equals sign, I'm thinking:
-//  on click
-//  operate()
-//  print to display
-//  stop all function
-// 
+//    What currently works:
+//        add, subtract, multiply, and divide functions,
+//        function for calculator operation with three variables called "operate",
+//        HTML calculator with buttons for each digit and operator,
+//            display for the calculator
+//            clear button
+//    What I need to work on:
+//        figure out how to update the display properly,
+//        make the calculator work,
+//            store the variables,
+//
 // basic arithmetic functions
 function add(a, b) {
-  let c = a + b;
-  return c;
+  return a + b;
 }
 
 function subtract(a, b) {
-  let c = a - b;
-  return c;
+  return a - b;
 }
 
 function multiply(a, b) {
-  let c = a * b;
-  return c;
+  return a * b;
 }
 
 function divide(a, b) {
-  let c = a / b;
-  return c;
+  if (b === 0) {
+    display = "Funny guy huh?";
+  }
+  return a / b;
 }
 
 // operate function
 function operate(operator, a, b) {
   switch (operator) {
-    case ("+"):
-      return add(a, b);
-      break;
-    case ("-"):
-      return subtract(a, b);
-      break;
-    case ("*"):
-      return multiply(a, b);
-      break;
-    case ("/"):
-      return divide(a, b);
-      break;
+    case ("+"): return add(a, b);
+    case ("-"): return subtract(a, b);
+    case ("*"): return multiply(a, b);
+    case ("/"): return divide(a, b);
     default:
       console.log("error");
       break;
   }
 
 }
-// default display
-var display = 0;
-document.getElementById("output").innerHTML = display;
 
-let firstNum, secondNum, arithmeticOperator, result;
+let arithmeticOperator = null;
+let firstNum = "";
+let secondNum = "";
+
+// default display
+let display = 0;
+document.getElementById("output").innerHTML = display
 
 // set firstNum
 const buttonNumberOne = document.querySelectorAll(
@@ -62,14 +58,18 @@ const buttonNumberOne = document.querySelectorAll(
 );
 buttonNumberOne.forEach(button => {
   button.addEventListener("click", function() {
-    firstNum = this.textContent; // set firstNum to clicked button
-    if (display == 0) { // check if display is 0, if so, changed to firstNum
+    const buttonPress = this.textContent; // set firstNum to clicked button
+    // checks whether an operation button has been pressed
+    if (arithmeticOperator === null) { // if not, store the pressed button in numOne, and append it to the display
+      firstNum += buttonPress;
       display = firstNum;
-    } else { // if not, append numbers
-
-      display = display + firstNum;
+    } else { // if so, store all subsequent numberbtn presses in secondNum
+      secondNum += buttonPress;
     }
-    document.getElementById("output").innerHTML = display;
+
+    display = firstNum + (arithmeticOperator ?? "") + secondNum;
+    document.getElementById("output").textContent = display;
+
   });
 });
 
