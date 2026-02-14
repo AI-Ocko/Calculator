@@ -46,7 +46,7 @@ let arithmeticOperator = null;
 let firstNum = "";
 let secondNum = "";
 
-// default display
+// update display
 function updateDisplay() {
   // edge case for dividing by zero
   if (arithmeticOperator === "/" && secondNum === "0") {
@@ -99,7 +99,14 @@ const arithmeticOperatorButton = document.querySelectorAll(
 );
 arithmeticOperatorButton.forEach(button => {
   button.addEventListener("click", function() {
+    // edge case for no first number
     if (firstNum === "") return;
+    // if there's already a second num, then evaluate the current expression
+    if (secondNum) {
+      const result = operate(arithmeticOperator, Number(firstNum), Number(secondNum));
+      firstNum = result;
+      secondNum = "";
+    }
 
     arithmeticOperator = this.textContent;
 
