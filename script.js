@@ -24,9 +24,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if (b === 0) {
-    display = "Funny guy huh?";
-  }
+  if (b === 0) return null;
   return a / b;
 }
 
@@ -49,38 +47,71 @@ let firstNum = "";
 let secondNum = "";
 
 // default display
-let display = 0;
-document.getElementById("output").innerHTML = display
+function updateDisplay() {
+  // edge case for dividing by zero
+  if (arithmeticOperator === "/" && secondNum === "0") {
+    document.getElementById("output").textContent = "Funny guy huh?";
+  } else
+    document.getElementById("output").textContent =
+      firstNum + (arithmeticOperator ?? "") + secondNum || "0";
+}
+
+updateDisplay();
+
+// equals button
+const equalsButton = document.querySelector("#equals");
+equalsButton.addEventListener("click", function() {
+  // in case number and arithmeticbuttons have not been set
+  if (firstNum === "" || secondNum === "" || arithmeticOperator === null) return;
+
+  // calculate
+  const result = operate(arithmeticOperator, Number(firstNum), Number(secondNum));
+  // reset variables for next operation
+  firstNum = result;
+  secondNum = "";
+  arithmeticOperator = null;
+
+  document.getElementById("output").textContent = result;
+});
 
 // set firstNum
-const buttonNumberOne = document.querySelectorAll(
+const numberButton = document.querySelectorAll(
   "#one, #two, #three, #four, #five, #six, #seven, #eight, #nine, #zero"
 );
-buttonNumberOne.forEach(button => {
+numberButton.forEach(button => {
   button.addEventListener("click", function() {
     const buttonPress = this.textContent; // set firstNum to clicked button
     // checks whether an operation button has been pressed
     if (arithmeticOperator === null) { // if not, store the pressed button in numOne, and append it to the display
       firstNum += buttonPress;
-      display = firstNum;
+      updateDisplay();
     } else { // if so, store all subsequent numberbtn presses in secondNum
       secondNum += buttonPress;
     }
-
-    display = firstNum + (arithmeticOperator ?? "") + secondNum;
-    document.getElementById("output").textContent = display;
+    updateDisplay();
 
   });
 });
 
 // set arithmeticOperator 
-const operatorButtons = document.querySelectorAll(
+const arithmeticOperatorButton = document.querySelectorAll(
   "#plus, #minus, #multiply, #divide"
 );
-operatorButtons.forEach(button => {
+arithmeticOperatorButton.forEach(button => {
   button.addEventListener("click", function() {
-    arithmeticOperator = this.textContent; // set arithmeticOperator to clicked button
-    display = display + arithmeticOperator;
-    document.getElementById("output").innerHTML = display;
-  })
+    if (firstNum === "") return;
+
+    arithmeticOperator = this.textContent;
+
+    updateDisplay();
+  });
+});
+
+// clear display
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", function() {
+  arithmeticOperator = null;
+  firstNum = "";
+  secondNum = "";
+  updateDisplay();
 });
